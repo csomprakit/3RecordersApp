@@ -11,6 +11,16 @@ class _SignInUpFormState extends State<SignInUpForm> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void _onSignIn()
+  {
+
+  }
+
+  void _onSignUp()
+  {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,12 +37,12 @@ class _SignInUpFormState extends State<SignInUpForm> {
           ),
           SizedBox(height: 15),
           ElevatedButton(child: Text("Sign Up"),
-              onPressed: (){},
+              onPressed: _onSignUp,
           ),
           SizedBox(height: 10),
           ElevatedButton(
             child: const Text('Sign in'),
-            onPressed: (){},
+            onPressed: _onSignIn,
           ),
         ],
       ),
