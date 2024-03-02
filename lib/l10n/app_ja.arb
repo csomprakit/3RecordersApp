@@ -1,0 +1,26 @@
+{
+  "dedicationLevel" : "献身レベル: ",
+  "lastInputTime" : "最終入力時刻: ",
+  "category" : "カテゴリー: ",
+  "saveButton" : "セーブ",
+  "addDate": "日付を追加（YYYYDDMM形式）",
+  "switchStyle" : "スイッチスタイル",
+
+  "addWorkoutEvent": "ワークアウトを追加",
+  "exerciseType" : "エクササイズの種類:",
+  "selectWorkout" : "選択したエクササイズ:  ",
+  "addSet" : "セット数",
+  "workoutHistoryButton" : "ワークアウト履歴の表示",
+
+  "addFood" : "食べ物を追加する",
+  "foodDropDown" : "食品 (新規エントリーまたはリスト)",
+  "selectFood" : "厳選された食べ物:  ",
+  "numServing" : "分量",
+  "servingInput" : "分量",
+  "foodHistoryButton" : "食品の歴史を見る",
+
+  "addEmotion" : "感情を加える",
+  "emotionDropDown" : "絵文字を選択してください",
+  "selectEmotion" : "選択した絵文字:  ",
+  "emotionHistoryButton" : "感情履歴の表示"
+}

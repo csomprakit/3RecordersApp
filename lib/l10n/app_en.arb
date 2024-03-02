@@ -1,0 +1,26 @@
+{
+  "dedicationLevel" : "Dedication Level: ",
+  "lastInputTime" : "Last Input: ",
+  "category" : "Category: ",
+  "saveButton" : "Save",
+  "addDate": "Add Date (YYYYDDMM format)",
+  "switchStyle" : "Switch Style",
+
+  "addWorkoutEvent": "Add Workout",
+  "exerciseType" : "Exercise Type",
+  "selectWorkout" : "Selected Exercise:  ",
+  "addSet" : "Number of Sets",
+  "workoutHistoryButton" : "View Workout History",
+
+  "addFood" : "Add Food",
+  "foodDropDown" : "Food (new entry or select from list)",
+  "selectFood" : "Selected Food:  ",
+  "numServing" : "Number of Servings",
+  "servingInput" : "Enter Serving",
+  "foodHistoryButton" : "View Food History",
+
+  "addEmotion" : "Add Emotion",
+  "emotionDropDown" : "Choose an Emoji",
+  "selectEmotion" : "Selected Emoji:  ",
+  "emotionHistoryButton" : "View Emotion History"
+}
