@@ -18,6 +18,9 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
         ),
+        actions: [
+          IconButton( icon: Icon(Icons.refresh), onPressed: () {})
+        ],
       ),
       body: const Column(
         children: [
