@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'sign_in_up_form.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -19,7 +20,7 @@ class _UserPageState extends State<UserPage> {
           ),
         ),
       ),
-      body: Text("User Page"),
+      body: SignInUpForm(),
     );
   }
 }
