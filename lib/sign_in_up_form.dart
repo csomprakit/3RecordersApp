@@ -16,17 +16,20 @@ class _SignInUpFormState extends State<SignInUpForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Text('Username:'),
           TextField(
             controller: _usernameController,
+            decoration: InputDecoration(labelText: 'Username'),
           ),
-          Text('Password:'),
+          SizedBox(height: 15),
           TextField(
             controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Password'),
           ),
+          SizedBox(height: 15),
           ElevatedButton(child: Text("Sign Up"),
               onPressed: (){},
           ),
+          SizedBox(height: 10),
           ElevatedButton(
             child: const Text('Sign in'),
             onPressed: (){},
