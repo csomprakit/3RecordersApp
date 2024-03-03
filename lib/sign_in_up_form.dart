@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInUpForm extends StatefulWidget {
   const SignInUpForm({super.key});
@@ -10,15 +11,34 @@ class SignInUpForm extends StatefulWidget {
 class _SignInUpFormState extends State<SignInUpForm> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String _message = '';
+  bool _isLogin = true;
+  String? _firebaseErrorCode;
 
-  void _onSignIn()
+
+  void _onSignIn() async
   {
-
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _usernameController.text, password: _passwordController.text);
+      setState(() {
+        _firebaseErrorCode = null;
+      });
+    } on FirebaseAuthException catch (ex) {
+      print(ex.code);
+      print(ex.message);
+      setState(() {
+        _firebaseErrorCode = ex.code;
+      });
+    }
   }
 
   void _onSignUp()
   {
-
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _usernameController.text,
+      password: _passwordController.text,
+    );
   }
 
   @override
@@ -26,14 +46,19 @@ class _SignInUpFormState extends State<SignInUpForm> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          TextField(
+          TextFormField(
             controller: _usernameController,
-            decoration: InputDecoration(labelText: 'Username'),
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration( icon: Icon(Icons.verified_user),
+          labelText: 'Username'),
           ),
           SizedBox(height: 15),
-          TextField(
+          TextFormField(
             controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
+            keyboardType: TextInputType.emailAddress,
+            obscureText: true,
+            decoration: InputDecoration( icon:
+            Icon(Icons.enhanced_encryption), labelText: 'Password'),
           ),
           SizedBox(height: 15),
           ElevatedButton(child: Text("Sign Up"),
@@ -44,6 +69,7 @@ class _SignInUpFormState extends State<SignInUpForm> {
             child: const Text('Sign in'),
             onPressed: _onSignIn,
           ),
+          if (_firebaseErrorCode != null) Text(_firebaseErrorCode!),
         ],
       ),
     );

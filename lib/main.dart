@@ -24,10 +24,6 @@ Future <void> main() async {
   final workoutdatabase = await $FloorWorkoutDatabase.databaseBuilder('workout.db').build();
   final _workoutdao = workoutdatabase.workoutEventDao;
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
   runApp(
     MultiProvider(
       providers: [

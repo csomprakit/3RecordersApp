@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'firebase_initializer.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
