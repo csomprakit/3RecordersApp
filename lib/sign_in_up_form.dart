@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -11,19 +12,34 @@ class SignInUpForm extends StatefulWidget {
 class _SignInUpFormState extends State<SignInUpForm> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _message = '';
-  bool _isLogin = true;
   String? _firebaseErrorCode;
 
-
-  void _onSignIn() async
-  {
+  void _onSignUp() async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _usernameController.text, password: _passwordController.text);
       setState(() {
         _firebaseErrorCode = null;
       });
+      String? userId = FirebaseAuth.instance.currentUser?.uid;
+      //Check if user has document, if not create one
+      if (userId != null) {
+        var userDoc = await FirebaseFirestore.instance
+            .collection('sharedcount')
+            .doc(userId)
+            .get();
+        if (!userDoc.exists) {
+          await FirebaseFirestore.instance
+              .collection('sharedcount')
+              .doc(userId)
+              .set({
+            'dedicationLevel': 0,
+            'totalPoints': 0,
+            'userID': userId,
+            'email': _usernameController.text,
+          });
+        }
+      }
     } on FirebaseAuthException catch (ex) {
       print(ex.code);
       print(ex.message);
@@ -33,8 +49,7 @@ class _SignInUpFormState extends State<SignInUpForm> {
     }
   }
 
-  void _onSignUp()
-  {
+  Future<void> _onSignIn() async {
     FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _usernameController.text,
       password: _passwordController.text,
@@ -49,25 +64,26 @@ class _SignInUpFormState extends State<SignInUpForm> {
           TextFormField(
             controller: _usernameController,
             keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration( icon: Icon(Icons.verified_user),
-          labelText: 'Username'),
+            decoration: const InputDecoration(
+                icon: Icon(Icons.verified_user), labelText: 'Username'),
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           TextFormField(
             controller: _passwordController,
             keyboardType: TextInputType.emailAddress,
             obscureText: true,
-            decoration: InputDecoration( icon:
-            Icon(Icons.enhanced_encryption), labelText: 'Password'),
+            decoration: const InputDecoration(
+                icon: Icon(Icons.enhanced_encryption), labelText: 'Password'),
           ),
-          SizedBox(height: 15),
-          ElevatedButton(child: Text("Sign Up"),
-              onPressed: _onSignUp,
-          ),
-          SizedBox(height: 10),
+          const SizedBox(height: 15),
           ElevatedButton(
-            child: const Text('Sign in'),
+            onPressed: _onSignUp,
+            child: const Text("Sign Up"),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
             onPressed: _onSignIn,
+            child: const Text('Sign in'),
           ),
           if (_firebaseErrorCode != null) Text(_firebaseErrorCode!),
         ],

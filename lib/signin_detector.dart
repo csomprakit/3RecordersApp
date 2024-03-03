@@ -10,21 +10,17 @@ class SignInDetector extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot)
-      {
-      print("Auth state change: $snapshot");
-      if (snapshot.connectionState == ConnectionState.waiting) {
-      return CircularProgressIndicator();
-      }
-
-      if (snapshot.hasData && snapshot.data != null) {
-      print("User signed in. Email: ${snapshot.data!.email}");
-      return LeaderboardPage();
-        //Text("Signed In as ${snapshot.data!.email}");
-      }
-
-      print("User not signed in. Showing SignInUpForm.");
-      return const SignInUpForm();
+      builder: (context, snapshot) {
+        print("Auth state change: $snapshot");
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        }
+        if (snapshot.hasData && snapshot.data != null) {
+          print("User signed in. Email: ${snapshot.data!.email}");
+          return const LeaderboardPage();
+        }
+        print("User not signed in. Showing SignInUpForm.");
+        return const SignInUpForm();
       },
     );
   }
