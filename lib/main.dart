@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Homework4',
+      title: 'Trackers',
       supportedLocales: L10n.all,
       localizationsDelegates: const [
         AppLocalizations.delegate,
