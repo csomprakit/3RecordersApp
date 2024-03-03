@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'sign_in_up_form.dart';
 import 'firebase_initializer.dart';
-
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -22,7 +20,7 @@ class _UserPageState extends State<UserPage> {
           ),
         ),
       ),
-      body: FirebaseInitializer(),
+      body: const FirebaseInitializer(),
       //SignInUpForm(),
     );
   }
