@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:beamer/beamer.dart';
 
 class LeaderboardPage extends StatefulWidget {
   const LeaderboardPage({super.key});
@@ -11,57 +12,33 @@ class LeaderboardPage extends StatefulWidget {
 
 
 class _LeaderboardPageState extends State<LeaderboardPage> {
-  //String _dedicationLevel = "Loading...";
-  //String _totalPoints = "Loading...";
   List<String> _leaderboard = [];
 
   @override
   void initState() {
     super.initState();
-    //getDedicationLevel();
     getLeaderboard();
   }
-/***
-  Future<void> getDedicationLevel() async {
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    CollectionReference collection = db.collection('sharedcount');
-    QuerySnapshot snapshot = await collection.get();
-    if (snapshot.docs.isNotEmpty) {
-      DocumentSnapshot document = snapshot.docs.first;
-      int dedicationLevel = document['dedicationLevel'];
-      int totalPoints = document['totalPoints'];
-      print("get dedication");
-      print(dedicationLevel);
-      print("get totalpoint");
-      print(totalPoints);
-      setState(() {
-        _dedicationLevel = dedicationLevel.toString();
-        _totalPoints = totalPoints.toString();
-      });
-    } else {
-      print('No documents found in sharedcount');
-    }
-  }
-***/
 
   Future<void> getLeaderboard() async {
-      String userId = FirebaseAuth.instance.currentUser?.email ?? '';
-      FirebaseFirestore db = FirebaseFirestore.instance;
-      CollectionReference collection = db.collection('sharedcount');
-      QuerySnapshot snapshot = await collection.orderBy('totalPoints', descending: true).get();
-      List<String> leaderboard = [];
-
-      for (QueryDocumentSnapshot doc in snapshot.docs) {
-        int points = doc['totalPoints'];
-        print('$userId: $points points');
-        leaderboard.add('$userId: $points points');
-      }
-      setState(() {
-        _leaderboard = leaderboard;
-      });
+    List<String> leaderboard = [];
+    FirebaseFirestore db = FirebaseFirestore.instance;
+    CollectionReference collection = db.collection('sharedcount');
+    QuerySnapshot snapshot = await collection.orderBy('totalPoints', descending: true).get();
+    for (QueryDocumentSnapshot doc in snapshot.docs) {
+      int points = doc['totalPoints'];
+      String email = doc['email'].toString();
+      leaderboard.add('$email: $points points');
+    }
+    setState(() {
+      _leaderboard = leaderboard;
+    });
   }
 
-
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    Beamer.of(context).beamToNamed('/user');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,19 +50,36 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
           ),
         actions: [
-          IconButton( icon: Icon(Icons.refresh), onPressed: () {
+          IconButton(icon: const Icon(Icons.refresh), onPressed: () {
           getLeaderboard();
         }),
+          IconButton(icon: const Icon(Icons.logout), onPressed: () {
+            _logout();
+          }),
         ],
       ),
-      body: ListView.builder(
-        itemCount: _leaderboard.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_leaderboard[index]),
-          );
-        },
-      )
+      body: Column(
+        children: [
+            const Text(
+              'Leaderboard',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _leaderboard.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_leaderboard[index]),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
