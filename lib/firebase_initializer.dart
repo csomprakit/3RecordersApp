@@ -22,9 +22,8 @@ class FirebaseInitializer extends StatelessWidget {
           print("Firebase initialization error: ${snapshot.error}");
           return const Text('Oh no! You can\'t connect to Firebase.');
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }
-
 }
