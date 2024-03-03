@@ -12,8 +12,7 @@ import 'Database/workout_database.dart';
 import './app_navigation.dart';
 import './shared_count.dart';
 import './l10n/l10n.dart';
-import 'firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 
 Future <void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
